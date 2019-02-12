@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Milestone 1 Demo</title>
+</head>
+<link rel="stylesheet" href="static/css/index.css">
+<body>
+<!--<div id="title-canvas" class="column-flex">-->
+<!--<div class="main-title">-->
+<!--NIKE-BOT-->
+<!--</div>-->
+<!--<div class="sub-title">-->
+<!--Xingyu Pan-->
+<!--</div>-->
+<!--</div>-->
+<div id="main-canvas" class="column-flex">
+    <h1>
+        Milestone 1 Data Collection Demo
+    </h1>
+    <!--<div id="robot-canvas">-->
+        <!--<canvas id="robot-face" class="column-flex" width="640" height="200"></canvas>-->
+    <!--</div>-->
+    <div class="row-flex">
+        <div class="column-flex">
+            <div id="camera-canvas" class="column-flex" style="height: 51px; width: 700px">
+                <div class="row-flex center-row">
+                    <button id="video-btn" class="btn normal-margin" onclick="start_or_stop_capturing()"> Start
+                        Capturing
+                    </button>
+                </div>
+                <div id="video-canvas" class="column-flex hidden">
+                    <img id="video-panel" src="">
+                </div>
+            </div>
+        </div>
+        <div class="column-flex" id="leapmotion-canvas" style="width: 700px; height: 51px;">
+            <button id="pause" class="btn normal-margin" onclick="togglePause()">Start</button>
+            <div id="leapmotion-panel" class="hidden">
+                <h2>Leap WebSocket JSON Viewer</h2>
+                <!--<input type="checkbox" id="pauseOnGesture" onclick="pauseForGestures()">Pause on gesture</input>-->
+                <div id="connection">WebSocket not connected</div>
+                <div id="main" style="visibility:hidden">
+                    <h3>JSON Frame data:</h3>
+                    <div id="output"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="static/js/index.js"></script>
+<!--<script src="static/js/robot.js"></script>-->
+<script src="static/js/leapmotion.js"></script>
+
+
+</html>

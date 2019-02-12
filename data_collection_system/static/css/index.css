@@ -1,0 +1,64 @@
+strong {
+    color: #a94442;
+}
+
+body {
+    background: #f3f3f4;
+}
+
+#gesture-img {
+    height: 300px;
+    margin: 15px;
+}
+
+.navbar-header-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+
+#logo {
+    font-size: 20px;
+    padding: 20px 30px;
+}
+
+#main-description {
+    margin-left: 10px;
+}
+
+#gesture-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gesture-description, #start-description {
+    font-size: 20px;
+    text-align: center;
+}
+
+#gesture-btn-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    margin: 10px;
+    font-size: 15px;
+}
+
+#start-img {
+    padding: 15px;
+}
+
+#user-name-input{
+    margin-bottom: 10px;
+}
+
+#progress-panel {
+    margin: 5px 30px 20px 30px;
+}

@@ -1,0 +1,116 @@
+body {
+    font-size: 15pt;
+    background: #2c3e50;
+    color: white;
+}
+
+#camera-canvas {
+    background: #18bc9c;
+    border-radius: 10pt;
+    padding: 10pt;
+    margin: 30pt;
+    min-width: 700px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+
+}
+
+#tutorial-panel {
+    border-radius: 10pt;
+    padding: 10pt;
+    margin: 30pt;
+    background: #2c3e50;
+}
+
+#robot-canvas {
+    border-radius: 10pt;
+    margin: 50pt 10pt 0 10pt;
+    min-width: 700px;
+}
+
+#video-panel {
+    border-radius: 10pt;
+    margin-top: 10pt;
+}
+
+#face-canvas {
+    border-radius: 10pt;
+}
+
+.column-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.center-row {
+    align-items: center;
+
+}
+
+.main-title {
+    font-size: 25pt;
+    font-weight: bold;
+}
+
+.sub-title {
+    font-size: 15pt;
+}
+
+.section-title {
+    font-size: 20px;
+}
+
+.btn {
+    font-size: 15pt;
+    border: solid 0;
+    border-radius: 10pt;
+    color: white;
+    background: #2c3e50;
+    padding: 3pt 10pt 3pt 10pt;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.normal-margin {
+    margin: 10px;
+}
+
+.block-status, .light-status {
+    border: solid 1pt;
+    border-radius: 10pt;
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.light-status {
+    background: #30799B;
+}
+
+#face-canvas {
+    position: absolute;
+
+}
+
+
+#leapmotion-canvas {
+    background: #18bc9c;
+    border-radius: 10pt;
+    padding: 10pt;
+    margin: 30pt;
+    min-width: 700px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+}
