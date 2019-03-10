@@ -18,6 +18,7 @@ def extract_lm_data(data):
     if len(fingers) != 5:
         return []
     vectors = []
+    fingers.sort(key=lambda x: x["type"])
     for finger in fingers:
         vectors.append(np.array(finger["mcpPosition"]) - wrist)
         vectors.append(np.array(finger["pipPosition"]) - wrist)
