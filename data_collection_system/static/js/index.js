@@ -1,68 +1,54 @@
-/**
- * Created by Admin on 2017/7/19.
- */
+// var gesture_img_list = [
+//     'ezgif.com-gif-maker-13.gif',
+//     'ezgif.com-gif-maker-12.gif',
+//     'ezgif.com-gif-maker-10.gif',
+//     'ezgif.com-gif-maker-11.gif',
+//     'ezgif.com-gif-maker-3.gif',
+//     'ezgif.com-gif-maker-2.gif',
+//     'ezgif.com-gif-maker-6.gif',
+//     'ezgif.com-gif-maker.gif',
+//     'ezgif.com-gif-maker-7.gif',
+//     'ezgif.com-gif-maker-5.gif',
+//     'ezgif.com-gif-maker-4.gif',
+//     'ezgif.com-gif-maker-9.gif',
+//     'ezgif.com-gif-maker-8.gif',
+//     'ezgif.com-gif-maker-15.gif',
+//     'ezgif.com-gif-maker-14.gif',
+//     'ezgif.com-gif-maker-16.gif',
+//     'ezgif.com-gif-maker-17.gif',
+//     'ezgif.com-gif-maker-20.gif',
+//     'ezgif.com-gif-maker-21.gif',
+//     'ezgif.com-gif-maker-22.gif',
+//     'ezgif.com-gif-maker-19.gif',
+//     'ezgif.com-gif-maker-18.gif',
+//     'shaking hand.gif',
+//     '1.png',
+//     '2.png',
+//     '3.png',
+//     '4.png',
+//     '5.png',
+//     '6.png'];
+
+
 
 var gesture_img_list = [
-    'ezgif.com-gif-maker-13.gif',
-    'ezgif.com-gif-maker-12.gif',
-    'ezgif.com-gif-maker-10.gif',
     'ezgif.com-gif-maker-11.gif',
-    'ezgif.com-gif-maker-3.gif',
-    'ezgif.com-gif-maker-2.gif',
-    'ezgif.com-gif-maker-6.gif',
-    'ezgif.com-gif-maker.gif',
-    'ezgif.com-gif-maker-7.gif',
-    'ezgif.com-gif-maker-5.gif',
-    'ezgif.com-gif-maker-4.gif',
-    'ezgif.com-gif-maker-9.gif',
-    'ezgif.com-gif-maker-8.gif',
-    'ezgif.com-gif-maker-15.gif',
-    'ezgif.com-gif-maker-14.gif',
-    'ezgif.com-gif-maker-16.gif',
-    'ezgif.com-gif-maker-17.gif',
-    'ezgif.com-gif-maker-20.gif',
     'ezgif.com-gif-maker-21.gif',
-    'ezgif.com-gif-maker-22.gif',
-    'ezgif.com-gif-maker-19.gif',
-    'ezgif.com-gif-maker-18.gif',
-    'shaking hand.gif',
-    '1.png',
-    '2.png',
-    '3.png',
-    '4.png',
     '5.png',
-    '6.png'];
+    'cross.jpg',
+    'flap_surface.jpeg',
+    'shaking hand.gif',
+];
+
 
 var gesture_description_list = [
-    'Three fingers click',
-    'Two fingers click',
-    'Three fingers swipe up',
     'One finger click',
-    'Move two fingers down',
-    'Move two fingers left',
-    'Rotate fingers CCW',
-    'Move two fingers right',
-    'Three fingers swipe right',
-    'Rotate fingers CW',
-    'Move two fingers up',
-    'Three fingers swipe down',
-    'Three fingers swipe left',
-    'Two fingers double click',
-    'One finger double click',
-    'Three fingers double click',
-    'Zoom out',
-    'Turn knob right',
     'Open hand',
-    'Close hand',
-    'Turn knob left',
-    'Zoom in',
-    'Shaking hand',
-    'Static gesture 1',
-    'Static gesture 2',
-    'Static gesture 3',
-    'Static gesture 4',
-    'Static gesture 5',
-    'Static gesture 6'];
+    'Raise your thumb',
+    'Draw a cross with your index finger and middle finger',
+    'flap a surface',
+    'Shake your hand',
+];
 
 
 var gesture_times_list = [];
@@ -74,12 +60,20 @@ var experiment_log_list = [];
 var current_log = null;
 var user_name = "";
 var timer = null;
-var max_times_per_gesture = 10;
+var max_times_per_gesture = 20;
 var gesture_times = 0;
 var experiment_start_type = 0;
 var gesture_sum = max_times_per_gesture * gesture_description_list.length;
 var clock_for_capturing = null;
-var capturing_url = "http://10.0.0.73/html/cam_pic.php";
+// var capturing_url_1 = "http://10.19.12.212/html/cam_pic.php";
+// var capturing_url_2 = "http://10.19.47.198/html/cam_pic.php";
+var capturing_url_1 = "http://10.0.0.73/html/cam_pic.php";
+var capturing_url_2 = "http://10.0.0.224/html/cam_pic.php";
+var IMU_url = "http://10.0.0.73:8888/get_IMU_data";
+var video_panel_1 = document.getElementById("video-panel-1");
+var video_panel_2 = document.getElementById("video-panel-2");
+var gesture_times_per_gesture = 0;
+
 
 console.log("max gesture index:", gesture_max_index);
 
@@ -109,7 +103,7 @@ function start_experiment() {
                 return;
             }
             experiment_start_type = 0;
-            max_times_per_gesture = 10;
+            max_times_per_gesture = 20;
             gesture_sum = max_times_per_gesture * gesture_description_list.length;
             init_gesture_times_list();
             console.log("max_times_per_gesture", max_times_per_gesture);
@@ -126,6 +120,7 @@ function start_experiment() {
             $("#gesture-description").show();
             $("#start-description").hide();
             $("#progress-panel").show();
+            clock_for_capturing = setInterval(capture_data, 100);
             update_gesture();
         });
 
@@ -164,6 +159,8 @@ function practice_experiment() {
             $("#gesture-description").show();
             $("#start-description").hide();
             $("#progress-panel").show();
+            clock_for_capturing = setInterval(capture_data, 100);
+
             update_gesture();
         });
 
@@ -226,7 +223,7 @@ function init_gesture_times_list() {
     for (var i = 0; i <= gesture_max_index; i++)
         gesture_times_list.push(0);
     gesture_times = 0;
-
+    gesture_times_per_gesture = 10000;
 }
 
 function download_logs() {
@@ -254,24 +251,41 @@ function get_next_gesture() {
     var width = gesture_times * 100 / gesture_sum;
     $("#progress-bar").attr("style", "width: " + width + "%");
     gesture_times += 1;
-    var gesture_index = Math.floor(Math.random() * (gesture_max_index + 1));
-    while (gesture_times_list[gesture_index] >= max_times_per_gesture) {
-        gesture_index = Math.floor(Math.random() * (gesture_max_index + 1));
+    if (gesture_times_per_gesture >= max_times_per_gesture) {
+        var gesture_index = Math.floor(Math.random() * (gesture_max_index + 1));
+        while (gesture_times_list[gesture_index] >= max_times_per_gesture) {
+            gesture_index = Math.floor(Math.random() * (gesture_max_index + 1));
+        }
+        gesture_times_list[gesture_index] += 1;
+        gesture_times_per_gesture = 1;
+        $("body").css("background", "#ddffba");
+        return gesture_index;
+    } else {
+        gesture_times_list[current_gesture_index] += 1;
+        gesture_times_per_gesture += 1;
+        return current_gesture_index;
     }
-    gesture_times_list[gesture_index] += 1;
-    return gesture_index;
 }
 
 
-function capture_image() {
+function capture_data() {
     // console.log("capturing");
+    var now = get_timestamp();
+    video_panel_1.src = capturing_url_1 + "?time=" + now + "&pDelay=40000";
+    video_panel_2.src = capturing_url_2 + "?time=" + now + "&pDelay=40000";
+
     $.get(
-        capturing_url + "?time=" + get_timestamp() + "&pDelay=40000",
+        IMU_url + "/" + now,
         function (data) {
-            console.log("captured")
             // console.log(data);
         }
     )
+    // $.get(
+    //     capturing_url_2 + "?time=" + get_timestamp() + "&pDelay=40000",
+    //     function (data) {
+    //         // console.log(data);
+    //     }
+    // )
 }
 
 function start_recording() {
@@ -282,8 +296,8 @@ function start_recording() {
     $("#finish-recording-btn").show();
     $("#restart-recording-btn").show();
     gesture_record_flag = true;
-    clock_for_capturing = setInterval(capture_image, 100);
     current_log["start_time"] = get_timestamp();
+    $("body").css("background", "#ffa5a5");
 }
 
 
@@ -296,8 +310,9 @@ function finish_recording() {
     $("#finish-recording-btn").hide();
     $("#restart-recording-btn").hide();
     gesture_record_flag = false;
-    clearInterval(clock_for_capturing);
+    // clearInterval(clock_for_capturing);
     current_log["finish_time"] = get_timestamp();
+    $("body").css("background", "#f3f3f4");
     update_gesture();
 }
 
@@ -306,10 +321,12 @@ function restart_recording() {
         return -1;
     console.log("restart recording");
     gesture_record_flag = false;
-    clearInterval(clock_for_capturing);
+    // clearInterval(clock_for_capturing);
     $("#start-recording-btn").show();
     $("#finish-recording-btn").hide();
     $("#restart-recording-btn").hide();
+    $("body").css("background", "#f3f3f4");
+
 
 }
 
@@ -329,12 +346,12 @@ function update_gesture() {
         stop_experiment(1);
         return;
     }
-    $("#collapse-btn").click();
+    $("#collapse-btn-1").click();
     setTimeout(next_update_gesture, 400);
 }
 
 function next_update_gesture() {
-    $("#collapse-btn").click();
+    $("#collapse-btn-1").click();
     console.log("gesture index", current_gesture_index);
     $("#gesture-img").attr("src", "img/" + gesture_img_list[current_gesture_index]);
     $("#gesture-description").html(gesture_description_list[current_gesture_index] + "</br>");

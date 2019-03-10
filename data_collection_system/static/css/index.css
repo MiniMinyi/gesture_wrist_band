@@ -62,3 +62,12 @@ body {
 #progress-panel {
     margin: 5px 30px 20px 30px;
 }
+
+
+
+.ibox-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
