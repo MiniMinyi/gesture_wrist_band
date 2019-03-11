@@ -4,6 +4,7 @@ import struct
 from PIL import Image
 import cv2
 import numpy as np
+from datetime import datetime
 
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
@@ -29,9 +30,11 @@ try:
         # processing on it
         image_stream.seek(0)
         image = Image.open(image_stream)
+        image.save("{}.jpg".format(datetime.now()))
         print('Image is %dx%d' % image.size)
-        imcv = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
-        cv2.imshow('test',imcv)
+        
+        
+        
 
 finally:
     cv2.destroyAllWindows()
