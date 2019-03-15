@@ -10,6 +10,8 @@ import numpy as np
 import time
 import requests
 from data_container import Data_container
+import os
+import  tensorflow as tf
 
 
 class Client(QThread):
@@ -88,12 +90,21 @@ class App(QtGui.QMainWindow):
             self._didi_client = Client(self._data_container, "http://192.168.5.73/html/cam_pic.php", 1)
             self._didi_client.start()
 
-        if not self._prediction_thread or self._prediction_thread.isFinished():
-            self._prediction_thread = Predict(self._data_container)
-            self._prediction_thread.signal.connect(self._finished_prediction)
-            self._prediction_thread.start()
+        # if not self._prediction_thread or self._prediction_thread.isFinished():
+        #     self._prediction_thread = Predict(self._data_container)
+        #     self._prediction_thread.signal.connect(self._finished_prediction)
+        #     self._prediction_thread.start()
+        res_flag, ret = self._data_container.predict()
+        if res_flag == 0:
+            ret_points = np.reshape(ret, [21, 3])
+            # print(ret_points)
+            y, z, x = ret_points.T
+            data = np.array([x, y, z])
+            vector = data.transpose() / 50
+            self.sp.setData(pos=vector)
+        # print("update")
 
-        QtCore.QTimer.singleShot(50, self._update)
+        QtCore.QTimer.singleShot(10, self._update)
 
     def _finished_prediction(self, result):
         pass
@@ -101,6 +112,11 @@ class App(QtGui.QMainWindow):
 
 
 if __name__ == '__main__':
+    os.environ["KMP_BLOCKTIME"] = '0'
+    os.environ["KMP_SETTINGS"] = '1'
+    os.environ["KMP_AFFINITY"] = 'granularity=fine,verbose,compact,1,0'
+    os.environ["OMP_NUM_THREADS"] = '4'
+
     app = QApplication(sys.argv)
 
     thisapp = App()

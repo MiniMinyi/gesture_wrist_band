@@ -1,20 +1,30 @@
 var clock_for_capturing = null;
-var capturing_url_1 = "http://10.19.218.9/html/cam_pic.php";
-var capturing_url_2 = "http://10.18.169.208/html/cam_pic.php";
+var capturing_url_1 = "http://192.168.5.178/html/cam_pic.php";
+var capturing_url_2 = "http://192.168.5.73/html/cam_pic.php";
 var video_panel_1 = document.getElementById("video-panel-1");
 var video_panel_2 = document.getElementById("video-panel-2");
 var start_flag = false;
 
+// var gesture_description_list = [
+//     'Two fingers click',
+//     'One finger click',
+//     'Two fingers double click',
+//     'One finger double click',
+//     'Zoom out',
+//     'Open hand',
+//     'Close hand',
+//     'Zoom in',
+//     'Shaking hand',
+// ];
+
 var gesture_description_list = [
-    'Two fingers click',
     'One finger click',
-    'Two fingers double click',
-    'One finger double click',
-    'Zoom out',
     'Open hand',
-    'Close hand',
-    'Zoom in',
-    'Shaking hand',
+    'Raise your thumb',
+    'Draw a cross with your index finger and middle finger',
+    'flap a surface',
+    'Shake your hand',
+    'idle'
 ];
 
 $(document).ready(function () {
@@ -64,7 +74,7 @@ function capture_data() {
         if (status === -2) {
             $("#label-result").html("Initializing...")
         } else if (status === 0) {
-            var rets = data.ret;
+            var rets = data.rets_list;
             var max_value = 0;
             var best_gesture = null;
             for (var i = 0; i < rets.length; i++) {
@@ -77,7 +87,7 @@ function capture_data() {
                 // console.log("#" + i + "v");
                 $("#" + i + "v").html(value.toString())
             }
-            $("#label-result").html(gesture_description_list[best_gesture]);
+            $("#label-result").html(gesture_description_list[data.best_ret]);
         } else {
             $("#label-result").html("Server Error")
         }
